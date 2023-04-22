@@ -12,7 +12,7 @@ server.use(mainRoutes)
 
 server.use("/", (req, res) => {
   res.json({
-    error: "Page not found",
+    error: "Page not findsing",
   })
 })
 server.listen(port, () => {

@@ -1,46 +1,43 @@
 import { Model, DataTypes } from "sequelize"
 import { sequelize } from "../instances/mysql"
 
-class Employer extends Model {
-  public id!: number
-  public name!: string
-  public email!: string
-  public password!: string
-  public admin!: boolean
-
-  public readonly createdAt!: Date
-  public readonly updatedAt!: Date
+export interface EmployerInstance extends Model {
+  id: number
+  name: string
+  email: string
+  password: string
+  admin: boolean
+  created_at: Date
+  updated_at: Date
 }
-
-Employer.init(
+export const Employer = sequelize.define<EmployerInstance>(
+  "employer",
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
     },
     name: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
+      type: DataTypes.STRING,
     },
     email: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    password: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
+      type: DataTypes.STRING,
     },
     admin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
+      type: DataTypes.STRING,
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
   },
   {
     tableName: "employers",
-    sequelize,
+    timestamps: false,
   }
 )
-
-export default Employer
