@@ -1,8 +1,8 @@
 {
   "*.ts": [
+    "npx prettier --write 'src/**'",
     "yarn eslint 'src/**' --fix",
     "yarn prettier --check 'src/**'",
-    "npx prettier --write 'src/**'",
     "yarn test:staged"
   ]
 }
