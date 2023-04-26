@@ -2,7 +2,7 @@ import express, { urlencoded } from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import mainRoutes from "./routes/mainRoutes"
-const port = process.env.PORT || 4000
+const port = process.env.PORT
 
 const server = express()
 dotenv.config()

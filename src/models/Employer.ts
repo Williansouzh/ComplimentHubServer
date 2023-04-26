@@ -24,7 +24,16 @@ export const Employer = sequelize.define<EmployerInstance>(
     email: {
       type: DataTypes.STRING,
     },
+    post: {
+      type: DataTypes.STRING,
+    },
+    age: {
+      type: DataTypes.INTEGER,
+    },
     admin: {
+      type: DataTypes.STRING,
+    },
+    password: {
       type: DataTypes.STRING,
     },
     created_at: {

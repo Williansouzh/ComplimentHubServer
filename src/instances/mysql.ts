@@ -4,12 +4,9 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export const sequelize = new Sequelize(
-  process.env.MYSQL_DATABASE as string,
-  process.env.MYSQL_USER as string,
-  process.env.MYSQL_PASSWORD as string,
+  process.env.MYSQL_DATABASECLOUD as string,
   {
     dialect: "mysql",
-    port: parseInt(process.env.MYSQL_PASSWORD as string),
   }
 )
 
