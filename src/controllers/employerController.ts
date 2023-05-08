@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { Employer } from "../models/Employer"
+import { generateToken } from "../config/passport"
 export const getAllEmployers = async (req: Request, res: Response) => {
   const employers = await Employer.findAll()
   res.json({
@@ -7,32 +8,67 @@ export const getAllEmployers = async (req: Request, res: Response) => {
     response: employers,
   })
 }
-export const CreateNewUser = async (req: Request, res: Response) => {
-  const { name, age, email, post, password } = req.body
-  if (name && age && email && post && password) {
+
+export const createNewUser = async (req: Request, res: Response) => {
+  try {
+    const { name, age, email, post, password } = req.body
+
+    // Verificar se o usuário já existe
+    const existingUser = await Employer.findOne({ where: { email } })
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" })
+    }
+
+    // Criar novo usuário
+    const newUser = await Employer.create({
+      name,
+      age,
+      email,
+      post,
+      password,
+    })
+
+    // Gerar token de autenticação
+    const token = generateToken({
+      id: newUser.id,
+    })
+    // Retornar resposta com sucesso
+    res.status(201).json({
+      message: "User created successfully",
+      id: newUser.id,
+      token,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Internal server error:", error })
+  }
+}
+
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body
+  if (email && password) {
     try {
-      const hasUser = await Employer.findOne({ where: { email } })
-      if (hasUser) {
-        res.status(409).json({ message: "This user already exists" })
-      } else {
-        const newUser = await Employer.create({
-          name,
-          age,
-          email,
-          post,
-          password,
+      const user = await Employer.findOne({
+        where: { email, password },
+      })
+      if (user) {
+        const token = generateToken({
+          id: user.id,
         })
-        console.log(newUser)
-        res.status(201).json({ message: "User created successfully" })
+        res.status(200).json({
+          status: true,
+          token: token,
+        })
+      } else {
+        res.status(200).json({
+          status: false,
+        })
+        return
       }
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ message: "Internal server error", body: req.body })
+      res.status(401).json({
+        error: error,
+      })
     }
-  } else {
-    res.json({
-      error: "Data dont sent",
-      body: req.body,
-    })
   }
 }

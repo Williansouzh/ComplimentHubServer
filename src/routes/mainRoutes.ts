@@ -4,6 +4,8 @@ const router = Router()
 
 router.get("/", employerController.getAllEmployers)
 
-router.post("/register", employerController.CreateNewUser)
+router.post("/register", employerController.createNewUser)
+
+router.post("/login", employerController.login)
 
 export default router
