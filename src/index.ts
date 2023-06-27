@@ -2,6 +2,7 @@ import express, { urlencoded } from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import mainRoutes from "./routes/mainRoutes"
+import multer from "multer"
 const port = process.env.PORT
 
 const server = express()

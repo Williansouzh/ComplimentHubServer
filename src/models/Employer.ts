@@ -9,6 +9,7 @@ export interface EmployerInstance extends Model {
   admin: boolean
   created_at: Date
   updated_at: Date
+  image: Buffer
 }
 export const Employer = sequelize.define<EmployerInstance>(
   "employer",
@@ -42,6 +43,10 @@ export const Employer = sequelize.define<EmployerInstance>(
     },
     updated_at: {
       type: DataTypes.DATE,
+      allowNull: true,
+    },
+    image: {
+      type: DataTypes.BLOB,
       allowNull: true,
     },
   },
